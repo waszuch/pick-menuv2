@@ -5,16 +5,18 @@ import { Button } from "./ui/button"
 import { useState } from "react"    
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
+import { logOutAction } from "@/actions/users";
+
 
 function LogOutButton() {
     const [loading, setLoading] = useState(false);
     const {toast} = useToast(); 
-    const roter = useRouter();
+    const router = useRouter();
     const handleLogOut = async () => {
         setLoading(true)
         await new Promise((resolve) => setTimeout(resolve, 2000));
 
-        const errorMessage = null;
+        const errorMessage = await logOutAction();
         
 
         if (!errorMessage){
@@ -23,11 +25,10 @@ function LogOutButton() {
                 description: "You have been logged out successfully",
                 variant: "success",
             })
-            roter.push("/")
+            router.push("/")
         }else {
             toast({
                 title: "Error",
-                description: errorMessage,
                 variant: "destructive",
             })
         }

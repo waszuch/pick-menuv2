@@ -1,0 +1,27 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id         String      @id @default(uuid())
+  email      String      @unique
+  menuItems  MenuItem[]  // relacja: użytkownik może mieć wiele pozycji
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt @default(now())
+}
+
+model MenuItem {
+  id          String     @id @default(uuid())
+  title       String     // nazwa potrawy
+  ingredients String     // składniki jako tekst
+  availableOn DateTime   // data dostępności
+  user        User       @relation(fields: [userId], references: [id])
+  userId      String     // klucz obcy
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt @default(now())
+}
