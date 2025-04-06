@@ -5,6 +5,8 @@ import { Button } from "./ui/button";
 import DarkModeToggle from "./DarkModeToggle";
 import LogOutButton from "./LogOutButton";
 import { getUser } from "@/auth/server";
+import { startOfWeek } from "date-fns";
+import WeekPicker from  "@/components/WeekPicker";
 
 async function Header() {
   const user = await getUser();
@@ -34,6 +36,7 @@ async function Header() {
       </Link>
 
       <div className="flex gap-4">
+      <WeekPicker />
         {user ? (
           <LogOutButton />
         ) : (
