@@ -1,38 +1,56 @@
-import { format, addDays, isSameDay } from "date-fns"
-import { pl } from "date-fns/locale"
+import { format, addDays, isSameDay } from "date-fns";
+import { pl } from "date-fns/locale";
 
 type MenuItem = {
-  id: string
-  title: string
-  ingredients: string
-  type: 'SOUP' | 'MAIN_DISH'
-  availableOn: Date
-  }
+  id: string;
+  title: string;
+  ingredients: string;
+  type: 'SOUP' | 'MAIN_DISH';
+  availableOn: Date;
+};
 
-  type Props = {
-    items: MenuItem[]
-    weekStart: Date
-    user?: { id: string; email: string } | null 
-  }
+type Props = {
+  items: MenuItem[];
+  weekStart: Date;
+  user?: { id: string; email: string } | null;
+};
 
-export default function WeekMenu({ items, weekStart, user }: Props) {
-  const days = Array.from({ length: 7 }).map((_, i) => addDays(weekStart, i))
+export default function WeekMenu({ items, weekStart }: Props) {
+  const days = Array.from({ length: 7 }).map((_, i) => addDays(weekStart, i));
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4 p-4 w-full">
       {days.map(day => (
-        <div key={day.toISOString()} className="border rounded-lg p-4 bg-muted/20">
-          <h2 className="font-bold text-lg mb-2">{format(day, 'EEEE, dd MMMM', { locale: pl })}</h2>
-          {items.filter(item => isSameDay(item.availableOn, day)).length > 0 ? (
-            items.filter(item => isSameDay(item.availableOn, day)).map(item => (
-              <div key={item.id} className="mb-2 p-2 rounded bg-background shadow-sm">
-                <p className="font-semibold">{item.type === 'SOUP' ? 'Zupa' : 'Danie główne'}: {item.title}</p>
-                <p className="text-sm text-muted-foreground">{item.ingredients}</p>
-              </div>
-            ))
-          ) : <p className="text-sm text-muted-foreground">Brak dań na ten dzień.</p>}
+        <div
+          key={day.toISOString()}
+          className="border rounded-xl bg-muted/20 shadow-lg flex flex-col overflow-hidden h-full"
+        >
+          <div className="bg-primary text-primary-foreground px-4 py-2 font-semibold text-center">
+            <div className="text-sm capitalize">
+              {format(day, 'EEEE', { locale: pl })}
+            </div>
+            <div className="text-lg font-bold">
+              {format(day, 'dd MMMM', { locale: pl })}
+            </div>
+          </div>
+          <div className="flex-grow p-4 overflow-y-auto space-y-3">
+            {items.filter(item => isSameDay(item.availableOn, day)).length > 0 ? (
+              items.filter(item => isSameDay(item.availableOn, day)).map(item => (
+                <div key={item.id} className="p-3 rounded-lg bg-background shadow-sm">
+                  <h3 className="font-semibold text-base">
+                    {item.type === 'SOUP' ? '🍲 Zupa' : '🍽️ Danie główne'}: {item.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground mt-1">{item.ingredients}</p>
+                </div>
+              ))
+            ) : (
+              <p className="text-sm text-muted-foreground italic text-center">
+                Brak dań na ten dzień.
+              </p>
+            )}
+          </div>
         </div>
       ))}
     </div>
-  )
+  );
 }

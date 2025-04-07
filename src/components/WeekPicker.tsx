@@ -1,36 +1,40 @@
 'use client'
-import { useRouter, useSearchParams } from "next/navigation"
-import { startOfWeek, format, parseISO } from "date-fns"
-import { useState } from "react"
-import { CalendarIcon } from "lucide-react"
-import { Button } from "./ui/button"
-import { Calendar } from "./ui/calendar"
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
+import { useRouter, useSearchParams } from "next/navigation";
+import { startOfWeek, format, parseISO } from "date-fns";
+import { useState } from "react";
+import { CalendarIcon } from "lucide-react";
+import { Button } from "./ui/button";
+import { Calendar } from "./ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
 export default function WeekPicker() {
-  const router = useRouter()
-  const params = useSearchParams()
+  const router = useRouter();
+  const params = useSearchParams();
   const [date, setDate] = useState<Date | undefined>(
     params.get('week') ? parseISO(params.get('week')!) : new Date()
-  )
+  );
 
   const selectDate = (selectedDate: Date | undefined) => {
-    if (!selectedDate) return
-    setDate(selectedDate)
-    router.push(`/?week=${format(selectedDate, "yyyy-MM-dd")}`)
-  }
+    if (!selectedDate) return;
+    setDate(selectedDate);
+    router.push(`/?week=${format(selectedDate, "yyyy-MM-dd")}`);
+  };
 
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="outline">
-          <CalendarIcon className="mr-2 h-4 w-4" />
-          {date ? `Tydzień od ${format(startOfWeek(date, { weekStartsOn: 1 }), "PPP")}` : "Wybierz tydzień"}
+        <Button variant="outline" className="flex items-center">
+          <CalendarIcon className="h-4 w-4 mr-2 sm:mr-2" />
+          <span className="hidden sm:inline">
+            {date
+              ? `Tydzień od ${format(startOfWeek(date, { weekStartsOn: 1 }), "PPP")}`
+              : "Wybierz tydzień"}
+          </span>
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
         <Calendar mode="single" selected={date} onSelect={selectDate} initialFocus weekStartsOn={1}/>
       </PopoverContent>
     </Popover>
-  )
+  );
 }

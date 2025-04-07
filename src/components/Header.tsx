@@ -5,44 +5,39 @@ import { Button } from "./ui/button";
 import DarkModeToggle from "./DarkModeToggle";
 import LogOutButton from "./LogOutButton";
 import { getUser } from "@/auth/server";
-import { startOfWeek } from "date-fns";
-import WeekPicker from  "@/components/WeekPicker";
+import WeekPicker from "@/components/WeekPicker";
 
 async function Header() {
   const user = await getUser();
 
   return (
     <header
-      className="bg-popover relative flex h-24 w-full items-center justify-between px-3 sm:px-8"
-      style={{
-        boxShadow: shadow,
-      }}
+      className="bg-popover flex items-center justify-between px-3 sm:px-8 py-2 sm:py-4 w-full"
+      style={{ boxShadow: shadow }}
     >
-
-
-      <Link className="flex items-end gap-2" href="/">
+      <Link className="flex items-center gap-2" href="/">
         <Image
           src="/menu.png"
-          height={60}
-          width={60}
+          height={50}
+          width={50}
           alt="logo"
           className="rounded-full"
           priority
         />
-
-        <h1 className="flex flex-col pb-1 text-2xl font-semibold leading-6">
+        <h1 className="text-xl sm:text-2xl font-semibold">
           Menu
         </h1>
       </Link>
 
-      <div className="flex gap-4">
-      <WeekPicker />
+      <div className="flex items-center gap-2 sm:gap-4">
+        <WeekPicker />
+
         {user ? (
           <LogOutButton />
         ) : (
           <>
-            <Button asChild>
-              <Link href="/sign-up" className="hidden sm:block">
+            <Button asChild className="hidden sm:flex">
+              <Link href="/sign-up">
                 Sign Up
               </Link>
             </Button>
