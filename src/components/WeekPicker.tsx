@@ -24,7 +24,7 @@ export default function WeekPicker() {
     <Popover>
       <PopoverTrigger asChild>
         <Button variant="outline" className="flex items-center">
-          <CalendarIcon className="h-4 w-4 mr-2 sm:mr-2" />
+          <CalendarIcon className="h-4 w-4 mr-2 sm:mr-2 text-blue-500" />
           <span className="hidden sm:inline">
             {date
               ? `Tydzień od ${format(startOfWeek(date, { weekStartsOn: 1 }), "PPP")}`
