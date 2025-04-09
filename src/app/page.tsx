@@ -4,10 +4,15 @@ import { startOfWeek, addDays, parseISO } from "date-fns"
 import WeekMenu from "@/components/WeekMenu"
 import AddMenuItemForm from "@/components/AddMenuItemForm"
 
-export default async function HomePage({ searchParams }: { searchParams: { week?: string } }) {
+interface PageProps {
+  params: {};
+  searchParams: { [key: string]: string | string[] | undefined };
+}
+
+export default async function HomePage({ searchParams }: PageProps) {
   const user = await getUser();
 
-  const selectedWeek = searchParams.week
+  const selectedWeek = searchParams.week && typeof searchParams.week === 'string'
     ? parseISO(searchParams.week)
     : new Date();
 
