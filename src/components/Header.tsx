@@ -37,7 +37,7 @@ async function Header() {
         ) : (
           <>
             <Button asChild variant="outline">
-              <Link href="/login">Login</Link>
+              <Link href="/login">Admin</Link>
             </Button>
           </>
         )}

@@ -33,11 +33,11 @@
    }
  
    return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4 p-4 w-full">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4 p-4 w-full max-w-7xl mx-auto">
       {days.map(day => (
         <div
           key={day.toISOString()}
-          className="border rounded-xl bg-muted/20 shadow-lg flex flex-col overflow-hidden h-full"
+          className="border rounded-xl bg-muted/20 shadow-lg flex flex-col overflow-hidden h-[400px] lg:h-[600px] w-full max-w-[500px] sm:max-w-[400px] mx-auto"
         >
           <div className="bg-primary text-primary-foreground px-4 py-2 font-semibold text-center">
             <div className="text-sm capitalize">

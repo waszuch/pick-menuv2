@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Calendar } from "@/components/ui/calendar"
 import { format } from "date-fns"
+import { pl } from "date-fns/locale"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 import { createMenuItem } from "@/actions/menu"
@@ -113,10 +114,11 @@ export default function AddMenuItemForm() {
               selected={availableOn}
               onSelect={setAvailableOn}
               weekStartsOn={1}
+              locale={pl}
             />
             {availableOn && (
               <p className="text-sm mt-2 text-muted-foreground">
-                Wybrana data: {format(availableOn, "PPP")}
+                Wybrana data: {format(availableOn, "PPP", { locale: pl })}
               </p>
             )}
           </div>

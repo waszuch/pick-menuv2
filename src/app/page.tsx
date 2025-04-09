@@ -27,8 +27,8 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
   });
 
   return (
-    <main className="max-w-full mx-auto p-4">
-      <div className="relative p-4 max-w-full mx-auto space-y-6">
+    <main className="w-full p-4">
+      <div className="relative p-4 w-full space-y-6">
         {user && <AddMenuItemForm />}
         <WeekMenu items={items} weekStart={weekStart} user={user} />
       </div>

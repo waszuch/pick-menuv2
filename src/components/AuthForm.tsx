@@ -64,18 +64,18 @@ function AuthForm({ type }: Props) {
           <Input
             id="email"
             name="email"
-            placeholder="Enter your email"
+            placeholder="Wprowadź email"
             type="email"
             required
             disabled={isPending}
           />
         </div>
         <div className="flex flex-col space-y-1.5">
-          <Label htmlFor="password">Password</Label>
+          <Label htmlFor="password">Hasło</Label>
           <Input
             id="password"
             name="password"
-            placeholder="Enter your password"
+            placeholder="Wprowadź hasło"
             type="password"
             required
             disabled={isPending}
@@ -87,7 +87,7 @@ function AuthForm({ type }: Props) {
           {isPending ? (
             <Loader2 className="animate-spin" />
           ) : isLoginForm ? (
-            "Login"
+            "Zaloguj się"
           ) : (
             "Sign Up"
           )}
