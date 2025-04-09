@@ -1,38 +1,38 @@
 'use client';
-
-import { format, addDays, isSameDay } from "date-fns";
-import { pl } from "date-fns/locale";
-import { deleteMenuItem } from "@/actions/menu";
-import { useRouter } from "next/navigation";
-
-type MenuItem = {
+ 
+ import { format, addDays, isSameDay } from "date-fns";
+ import { pl } from "date-fns/locale";
+ import { deleteMenuItem } from "@/actions/menu";
+ import { useRouter } from "next/navigation";
+ 
+ type MenuItem = {
   id: string;
   title: string;
   ingredients: string;
   type: 'SOUP' | 'MAIN_DISH';
   availableOn: Date;
 };
-
-type Props = {
-  items: MenuItem[];
-  weekStart: Date;
-  user?: { id: string; email?: string } | null;
-};
-
-export default function WeekMenu({ items, weekStart, user }: Props) {
-  const router = useRouter();
-  const days = Array.from({ length: 7 }).map((_, i) => addDays(weekStart, i));
-
-  const handleDelete = async (id: string) => {
-    try {
-      await deleteMenuItem(id);
-      router.refresh();
-    } catch (error) {
-      console.error("Failed to delete item:", error);
-    }
-  }
-
-  return (
+ type Props = {
+   items: MenuItem[];
+   weekStart: Date;
+   user?: { id: string; email?: string } | null;
+ };
+ 
+ 
+ export default function WeekMenu({ items, weekStart, user }: Props) {
+   const router = useRouter();
+   const days = Array.from({ length: 7 }).map((_, i) => addDays(weekStart, i));
+ 
+   const handleDelete = async (id: string) => {
+     try {
+       await deleteMenuItem(id);
+       router.refresh();
+     } catch (error) {
+       console.error("Failed to delete item:", error);
+     }
+   }
+ 
+   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4 p-4 w-full">
       {days.map(day => (
         <div
