@@ -9,7 +9,7 @@ import { useTransition } from "react";
 import { Button } from "./ui/button";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
-import { loginAction, signUpAction } from "@/actions/users";
+import { loginAction } from "@/actions/users";
 
 
 type Props = {
@@ -36,10 +36,6 @@ function AuthForm({ type }: Props) {
       errorMessage = (await loginAction(email, password)).errorMessage;
       title = "Logged in";
       description = "You have been logged in successfully";
-     }else{
-      errorMessage = (await signUpAction(email, password)).errorMessage;
-      title = "Signed Up";
-      description = "You have been signed up successfully";
      }
 
   
@@ -97,17 +93,6 @@ function AuthForm({ type }: Props) {
             "Sign Up"
           )}
         </Button>
-        <p className="text-xs">
-          {isLoginForm
-            ? "Don't have an account yet?"
-            : "Already have an account?"}{" "}
-          <Link
-            href={isLoginForm ? "/sign-up" : "/login"}
-            className={`text-blue-500 underline ${isPending ? "pointer-events-none opacity-50" : ""}`}
-          >
-            {isLoginForm ? "Sign Up" : "Login"}
-          </Link>
-        </p>
       </CardFooter>
     </form>
   );

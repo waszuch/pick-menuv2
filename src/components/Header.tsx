@@ -36,11 +36,6 @@ async function Header() {
           <LogOutButton />
         ) : (
           <>
-            <Button asChild className="hidden sm:flex">
-              <Link href="/sign-up">
-                Sign Up
-              </Link>
-            </Button>
             <Button asChild variant="outline">
               <Link href="/login">Login</Link>
             </Button>

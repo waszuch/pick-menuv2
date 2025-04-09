@@ -33,29 +33,3 @@ export const logOutAction = async () => {
   }
 };
 
-export const signUpAction = async (email: string, password: string) => {
-  try {
-    const { auth } = await createClient();
-
-    const { data, error } = await auth.signUp({
-      email,
-      password,
-    });
-    if (error) throw error;
-
-    const userId = data.user?.id;
-    if (!userId) throw new Error("Error signing up");
-
-    await prisma.user.create({
-      data: {
-        id: userId,
-        email,
-      },
-    });
-
-
-    return { errorMessage: null };
-  } catch (error) {
-    return handleError(error);
-  }
-};
