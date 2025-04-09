@@ -2,7 +2,7 @@
 
 import { createClient } from "@/auth/server";
 import { handleError } from "@/lib/utils";
-import { prisma } from "@/db/prisma"
+
 
 export const loginAction = async (email: string, password: string) => {
   try {
