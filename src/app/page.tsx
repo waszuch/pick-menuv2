@@ -29,7 +29,7 @@ export default async function HomePage({ searchParams }: { searchParams: { week?
     <main className="max-w-full mx-auto p-4">
       <div className="relative p-4 max-w-full mx-auto space-y-6">
         {user && <AddMenuItemForm />}
-        <WeekMenu items={items} weekStart={weekStart} />
+        <WeekMenu items={items} weekStart={weekStart} user={user} />
       </div>
     </main>
   );

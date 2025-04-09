@@ -30,3 +30,27 @@ export async function createMenuItem(formData: FormData) {
 
   return item
 }
+
+export async function deleteMenuItem(itemId: string) {
+  const user = await getUser();
+  if (!user) {
+    throw new Error("Unauthorized");
+  }
+
+  const item = await prisma.menuItem.findUnique({
+    where: { 
+      id: itemId,
+      userId: user.id
+    },
+  });
+
+  if (!item) {
+    throw new Error("Item not found or you do not have permission to delete this item.");
+  }
+
+  await prisma.menuItem.delete({
+    where: { id: itemId },
+  });
+
+  return { success: true };
+}
