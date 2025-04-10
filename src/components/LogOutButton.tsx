@@ -16,21 +16,22 @@ function LogOutButton() {
         setLoading(true)
         await new Promise((resolve) => setTimeout(resolve, 2000));
 
-        const errorMessage = await logOutAction();
+        const result = await logOutAction();
+       
         
-
-        if (!errorMessage){
+        if (result.errorMessage){
+            toast({
+                title: "Error",
+                description: typeof result.errorMessage === 'string' ? result.errorMessage : 'An error occurred during logout',
+                variant: "destructive",
+            })
+        } else {
             toast({
                 title: "Log Out",
                 description: "You have been logged out successfully",
                 variant: "success",
             })
             router.push("/")
-        }else {
-            toast({
-                title: "Error",
-                variant: "destructive",
-            })
         }
 
         
@@ -41,7 +42,7 @@ function LogOutButton() {
     variant="outline"
     onClick={handleLogOut}
     disabled={loading}
-    className="w-24">{loading ? <Loader2 className="animate-spin"/> : "Log Out"}
+    className="w-24">{loading ? <Loader2 className="animate-spin"/> : "Wyloguj"}
     </Button>
   )
 }

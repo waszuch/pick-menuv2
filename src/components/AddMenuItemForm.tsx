@@ -4,7 +4,6 @@ import { useState, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Calendar } from "@/components/ui/calendar"
 import { format } from "date-fns"
 import { pl } from "date-fns/locale"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
@@ -22,27 +21,30 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog"
 
-export default function AddMenuItemForm() {
+type Props = {
+  defaultDate: Date;
+}
+
+export default function AddMenuItemForm({ defaultDate }: Props) {
   const router = useRouter()
   const formRef = useRef<HTMLFormElement>(null)
 
   const [title, setTitle] = useState("")
   const [ingredients, setIngredients] = useState("")
-  const [availableOn, setAvailableOn] = useState<Date | undefined>()
   const [type, setType] = useState<"SOUP" | "MAIN_DISH">("MAIN_DISH")
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!title || !ingredients || !availableOn || !type) {
-      alert("Uzupełnij wszystkie pola!")
+    if (!title || !type) {
+      alert("Uzupełnij wymagane pola!")
       return
     }
 
     try {
       const formData = new FormData()
       formData.append("title", title)
-      formData.append("ingredients", ingredients)
-      formData.append("availableOn", availableOn.toISOString())
+      formData.append("ingredients", ingredients || "")
+      formData.append("availableOn", defaultDate.toISOString())
       formData.append("type", type)
 
       await createMenuItem(formData)
@@ -50,7 +52,6 @@ export default function AddMenuItemForm() {
       formRef.current?.reset()
       setTitle("")
       setIngredients("")
-      setAvailableOn(undefined)
       setType("MAIN_DISH")
 
       router.refresh()
@@ -64,7 +65,7 @@ export default function AddMenuItemForm() {
     <Dialog>
       {/* Przycisk wywołujący modal */}
       <DialogTrigger asChild>
-        <Button>Dodaj nowe danie</Button>
+        <Button className="w-full mt-4">Dodaj nowe danie</Button>
       </DialogTrigger>
 
       {/* Treść modala */}
@@ -72,7 +73,7 @@ export default function AddMenuItemForm() {
         <DialogHeader>
           <DialogTitle>Nowe danie</DialogTitle>
           <DialogDescription>
-            Wypełnij poniższe pola, aby dodać nowe danie do menu
+            Wypełnij poniższe pola, aby dodać nowe danie do menu na dzień {format(defaultDate, "PPP", { locale: pl })}
           </DialogDescription>
         </DialogHeader>
 
@@ -105,22 +106,6 @@ export default function AddMenuItemForm() {
                 <Label htmlFor="main">Danie główne</Label>
               </div>
             </RadioGroup>
-          </div>
-
-          <div>
-            <Label className="mb-2">Data dostępności:</Label>
-            <Calendar
-              mode="single"
-              selected={availableOn}
-              onSelect={setAvailableOn}
-              weekStartsOn={1}
-              locale={pl}
-            />
-            {availableOn && (
-              <p className="text-sm mt-2 text-muted-foreground">
-                Wybrana data: {format(availableOn, "PPP", { locale: pl })}
-              </p>
-            )}
           </div>
 
           <DialogFooter>

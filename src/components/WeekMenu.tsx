@@ -4,6 +4,7 @@
  import { pl } from "date-fns/locale";
  import { deleteMenuItem } from "@/actions/menu";
  import { useRouter } from "next/navigation";
+import AddMenuItemForm from "./AddMenuItemForm"; 
  
  type MenuItem = {
   id: string;
@@ -33,11 +34,11 @@
    }
  
    return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4 p-4 w-full max-w-7xl mx-auto">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4 w-full max-w-none">
       {days.map(day => (
         <div
           key={day.toISOString()}
-          className="border rounded-xl bg-muted/20 shadow-lg flex flex-col overflow-hidden h-[400px] lg:h-[600px] w-full max-w-[500px] sm:max-w-[400px] mx-auto"
+          className="border rounded-xl bg-muted/20 shadow-lg flex flex-col overflow-hidden h-[400px] lg:h-[600px] w-full"
         >
           <div className="bg-primary text-primary-foreground px-4 py-2 font-semibold text-center">
             <div className="text-sm capitalize">
@@ -50,7 +51,7 @@
           <div className="flex-grow p-4 overflow-y-auto space-y-3">
             {items.filter(item => isSameDay(item.availableOn, day)).length > 0 ? (
               items.filter(item => isSameDay(item.availableOn, day)).map(item => (
-                <div key={item.id} className="p-3 rounded-lg bg-background shadow-sm flex justify-between items-center">
+                <div key={item.id} className="p-3 rounded-lg bg-background shadow-sm">
                   <div>
                     <h3 className="font-semibold text-base">
                       {item.type === 'SOUP' ? '🍲 Zupa' : '🍽️ Danie główne'}: {item.title}
@@ -58,7 +59,10 @@
                     <p className="text-sm text-muted-foreground mt-1">{item.ingredients}</p>
                   </div>
                   {user && (
-                    <button onClick={() => handleDelete(item.id)} className="text-red-500 hover:text-red-700 ml-2">
+                    <button 
+                      onClick={() => handleDelete(item.id)} 
+                      className="text-red-500 hover:text-red-700 mt-2 w-full text-left"
+                    >
                       Usuń
                     </button>
                   )}
@@ -69,6 +73,7 @@
                 Brak dań na ten dzień.
               </p>
             )}
+            {user && <AddMenuItemForm defaultDate={day} />}
           </div>
         </div>
       ))}

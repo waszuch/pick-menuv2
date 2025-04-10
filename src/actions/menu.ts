@@ -10,11 +10,11 @@
    }
  
    const title = formData.get("title")?.toString()
-   const ingredients = formData.get("ingredients")?.toString()
+   const ingredients = formData.get("ingredients")?.toString() || ""
    const availableOn = formData.get("availableOn")?.toString()
    const type = formData.get("type") as "SOUP" | "MAIN_DISH"
  
-   if (!title || !ingredients || !availableOn || !type) {
+   if (!title || !availableOn || !type) {
      throw new Error("Brak wymaganych danych")
    }
  
