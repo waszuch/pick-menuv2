@@ -22,16 +22,16 @@ function LogOutButton() {
                 description: typeof result.errorMessage === 'string' ? result.errorMessage : 'An error occurred during logout'
             })
         } else {
-            toast.success("Log Out", {
-                description: "You have been logged out successfully"
+            toast.success("WYLOGOWANO", {
+                description: "Wylogowano pomyślnie"
             })
             router.push("/")
-        }
+        }       
 
         
     setLoading(false)
     }
-  return (
+  return (  
     <Button 
     variant="outline"
     onClick={handleLogOut}

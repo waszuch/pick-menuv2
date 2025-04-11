@@ -32,8 +32,8 @@ function AuthForm({ type }: Props) {
     let description;
      if (isLoginForm) {
       errorMessage = (await loginAction(email, password)).errorMessage;
-      title = "Logged in";
-      description = "You have been logged in successfully";
+      title = "ZALOGOWANO";
+      description = "Zalogowano pomyślnie";
      }
 
   
