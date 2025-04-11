@@ -32,4 +32,3 @@ export const logOutAction = async () => {
     return handleError(error);
   }
 };
-

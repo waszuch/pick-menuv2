@@ -1,6 +1,6 @@
 "use client";
 
-import { useToast } from "@/hooks/use-toast";
+
 import { useRouter } from "next/navigation";
 import { CardContent, CardFooter } from "./ui/card";
 import { Label } from "./ui/label";
@@ -9,6 +9,7 @@ import { useTransition } from "react";
 import { Button } from "./ui/button";
 import { Loader2 } from "lucide-react";
 import { loginAction } from "@/actions/users";
+import { toast } from "sonner"
 
 
 type Props = {
@@ -19,8 +20,6 @@ function AuthForm({ type }: Props) {
   const isLoginForm = type === "login";
 
   const router = useRouter();
-  const { toast } = useToast();
-
   const [isPending, startTransition] = useTransition();
 
   const handleSubmit = (formData: FormData) => {
@@ -40,18 +39,12 @@ function AuthForm({ type }: Props) {
   
 
   if(!errorMessage){
-    toast({
-      title,
+    toast.success(title, {
       description,
-      variant: "success",
     })
     router.push("/")
   }else{
-    toast({
-      title: "Error",
-      
-      variant: "destructive",
-    });
+    toast.error("Error")
   }
     });
   };

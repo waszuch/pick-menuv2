@@ -9,6 +9,7 @@ import { pl } from "date-fns/locale"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 import { createMenuItem } from "@/actions/menu"
+import { toast } from "sonner"
 
 // Importy z shadcn:
 import {
@@ -36,7 +37,9 @@ export default function AddMenuItemForm({ defaultDate }: Props) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!title || !type) {
-      alert("Uzupełnij wymagane pola!")
+      toast.error("Błąd", {
+        description: "Uzupełnij wymagane pola!"
+      })
       return
     }
 
@@ -55,9 +58,13 @@ export default function AddMenuItemForm({ defaultDate }: Props) {
       setType("MAIN_DISH")
 
       router.refresh()
-      alert("Danie dodane!")
+      toast.success("Sukces", {
+        description: "Danie zostało dodane!"
+      })
     } catch (err) {
-      alert("Błąd przy dodawaniu dania.")
+      toast.error("Błąd", {
+        description: "Wystąpił błąd przy dodawaniu dania."
+      })
     }
   }
 

@@ -3,14 +3,12 @@
 import { Loader2 } from "lucide-react"
 import { Button } from "./ui/button"
 import { useState } from "react"    
-import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { logOutAction } from "@/actions/users";
-
+import { toast } from "sonner"
 
 function LogOutButton() {
     const [loading, setLoading] = useState(false);
-    const {toast} = useToast(); 
     const router = useRouter();
     const handleLogOut = async () => {
         setLoading(true)
@@ -20,16 +18,12 @@ function LogOutButton() {
        
         
         if (result.errorMessage){
-            toast({
-                title: "Error",
-                description: typeof result.errorMessage === 'string' ? result.errorMessage : 'An error occurred during logout',
-                variant: "destructive",
+            toast.error("Error", {
+                description: typeof result.errorMessage === 'string' ? result.errorMessage : 'An error occurred during logout'
             })
         } else {
-            toast({
-                title: "Log Out",
-                description: "You have been logged out successfully",
-                variant: "success",
+            toast.success("Log Out", {
+                description: "You have been logged out successfully"
             })
             router.push("/")
         }
