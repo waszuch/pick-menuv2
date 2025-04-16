@@ -35,9 +35,9 @@ export default function AddMenuItemForm({ defaultDate }: Props) {
   const [type, setType] = useState<"SOUP" | "MAIN_DISH">("MAIN_DISH")
 
   const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
     setLoading(true)
     await new Promise((resolve) => setTimeout(resolve, 2000));
-    e.preventDefault()
     if (!title || !type) {
       toast.error("Błąd", {
         description: "Uzupełnij wymagane pola!"
