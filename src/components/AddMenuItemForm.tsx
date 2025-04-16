@@ -10,7 +10,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 import { createMenuItem } from "@/actions/menu"
 import { toast } from "sonner"
-
+import { Loader2 } from "lucide-react"
 // Importy z shadcn:
 import {
   Dialog,
@@ -29,12 +29,14 @@ type Props = {
 export default function AddMenuItemForm({ defaultDate }: Props) {
   const router = useRouter()
   const formRef = useRef<HTMLFormElement>(null)
-
+  const [loading, setLoading] = useState(false)
   const [title, setTitle] = useState("")
   const [ingredients, setIngredients] = useState("")
   const [type, setType] = useState<"SOUP" | "MAIN_DISH">("MAIN_DISH")
 
   const handleSubmit = async (e: React.FormEvent) => {
+    setLoading(true)
+    await new Promise((resolve) => setTimeout(resolve, 2000));
     e.preventDefault()
     if (!title || !type) {
       toast.error("Błąd", {
@@ -116,7 +118,7 @@ export default function AddMenuItemForm({ defaultDate }: Props) {
           </div>
 
           <DialogFooter>
-            <Button type="submit">Dodaj do menu</Button>
+            <Button type="submit" disabled={loading}>{loading ? <Loader2 className="animate-spin"/> : "Dodaj do menu"}</Button>
           </DialogFooter>
         </form>
       </DialogContent>
