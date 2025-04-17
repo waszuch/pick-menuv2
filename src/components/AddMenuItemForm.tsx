@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label"
 import { createMenuItem } from "@/actions/menu"
 import { toast } from "sonner"
 import { Loader2 } from "lucide-react"
-// Importy z shadcn:
+
 import {
   Dialog,
   DialogTrigger,
@@ -42,6 +42,7 @@ export default function AddMenuItemForm({ defaultDate }: Props) {
       toast.error("Błąd", {
         description: "Uzupełnij wymagane pola!"
       })
+      setLoading(false)
       return
     }
 
@@ -67,6 +68,8 @@ export default function AddMenuItemForm({ defaultDate }: Props) {
       toast.error("Błąd", {
         description: "Wystąpił błąd przy dodawaniu dania."
       })
+    } finally {
+      setLoading(false)
     }
   }
 
