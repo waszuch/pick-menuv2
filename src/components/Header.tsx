@@ -38,11 +38,11 @@ async function Header() {
           <>
             <Button asChild className="hidden sm:flex">
               <Link href="/sign-up">
-                Sign Up
+                Zarejestruj się
               </Link>
             </Button>
             <Button asChild variant="outline">
-              <Link href="/login">Login</Link>
+              <Link href="/login">Zaloguj się</Link>
             </Button>
           </>
         )}

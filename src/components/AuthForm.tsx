@@ -82,15 +82,15 @@ function AuthForm({ type }: Props) {
           {isPending ? (
             <Loader2 className="animate-spin" />
           ) : isLoginForm ? (
-            "Login"
+            "Zaloguj się"
           ) : (
-            "Sign Up"
+            "Zarejestruj się"
           )}
         </Button>
         <p className="text-xs">
           {isLoginForm
-            ? "Don't have an account yet?"
-            : "Already have an account?"}{" "}
+            ? "Jeszcze nie masz konta?"
+            : "Masz już konto?"}{" "}
           <Link
             href={isLoginForm ? "/sign-up" : "/login"}
             className={`text-blue-500 underline ${isPending ? "pointer-events-none opacity-50" : ""}`}
