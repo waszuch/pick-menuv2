@@ -1,6 +1,6 @@
 "use client";
 
-
+import { toast } from "sonner"
 import { useRouter } from "next/navigation";
 import { CardContent, CardFooter } from "./ui/card";
 import { Label } from "./ui/label";
@@ -8,8 +8,8 @@ import { Input } from "./ui/input";
 import { useTransition } from "react";
 import { Button } from "./ui/button";
 import { Loader2 } from "lucide-react";
-import { loginAction } from "@/actions/users";
-import { toast } from "sonner"
+import Link from "next/link";
+import { loginAction, signUpAction } from "@/actions/users";
 
 
 type Props = {
@@ -27,27 +27,25 @@ function AuthForm({ type }: Props) {
       const email = formData.get("email") as string;
       const password = formData.get("password") as string;
 
-    let errorMessage;
-    let title;
-    let description;
-     if (isLoginForm) {
-      errorMessage = (await loginAction(email, password)).errorMessage;
-      title = "ZALOGOWANO";
-      description = "Zalogowano pomyślnie";
-     }
+      let errorMessage;
+      let title;
+      let description;
+       if (isLoginForm) {
+        errorMessage = (await loginAction(email, password)).errorMessage;
+        title = "ZALOGOWANO";
+        description = "Zalogowano pomyślnie";
+       }
 
-  
-
-  if(!errorMessage){
-    toast.success(title, {
-      description,
-    })
-    router.push("/")
-  }else{
-    toast.error("Error")
-  }
-    });
-  };
+     if(!errorMessage){
+      toast.success(title, {
+        description,
+      })
+      router.push("/")
+    }else{
+      toast.error("Error")
+    }
+      });
+    };
        
   return (
     <form action={handleSubmit}>
@@ -57,18 +55,18 @@ function AuthForm({ type }: Props) {
           <Input
             id="email"
             name="email"
-            placeholder="Wprowadź email"
+            placeholder="Enter your email"
             type="email"
             required
             disabled={isPending}
           />
         </div>
         <div className="flex flex-col space-y-1.5">
-          <Label htmlFor="password">Hasło</Label>
+          <Label htmlFor="password">Password</Label>
           <Input
             id="password"
             name="password"
-            placeholder="Wprowadź hasło"
+            placeholder="Enter your password"
             type="password"
             required
             disabled={isPending}
@@ -80,11 +78,22 @@ function AuthForm({ type }: Props) {
           {isPending ? (
             <Loader2 className="animate-spin" />
           ) : isLoginForm ? (
-            "Zaloguj się"
+            "Login"
           ) : (
             "Sign Up"
           )}
         </Button>
+        <p className="text-xs">
+          {isLoginForm
+            ? "Don't have an account yet?"
+            : "Already have an account?"}{" "}
+          <Link
+            href={isLoginForm ? "/sign-up" : "/login"}
+            className={`text-blue-500 underline ${isPending ? "pointer-events-none opacity-50" : ""}`}
+          >
+            {isLoginForm ? "Sign Up" : "Login"}
+          </Link>
+        </p>
       </CardFooter>
     </form>
   );
