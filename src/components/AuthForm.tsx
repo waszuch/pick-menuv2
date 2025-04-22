@@ -34,6 +34,10 @@ function AuthForm({ type }: Props) {
         errorMessage = (await loginAction(email, password)).errorMessage;
         title = "ZALOGOWANO";
         description = "Zalogowano pomyślnie";
+       } else {
+        errorMessage = (await signUpAction(email, password)).errorMessage;
+        title = "ZAREJESTROWANO";
+        description = "Rejestracja zakończona pomyślnie";
        }
 
      if(!errorMessage){

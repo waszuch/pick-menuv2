@@ -1,8 +1,8 @@
-import { createServerClient } from "@supabase/ssr";
-import { cookies } from "next/headers";
+import { createServerClient } from '@supabase/ssr'
+import { cookies } from 'next/headers'
 
 export async function createClient() {
-  const cookieStore = await cookies();
+  const cookieStore = await cookies()
 
   const client = createServerClient(
     process.env.SUPABASE_URL!,
@@ -10,31 +10,26 @@ export async function createClient() {
     {
       cookies: {
         getAll() {
-          return cookieStore.getAll();
+          return cookieStore.getAll()
         },
         setAll(cookiesToSet) {
           try {
             cookiesToSet.forEach(({ name, value, options }) =>
-              cookieStore.set(name, value, options),
-            );
-          } catch {}
+              cookieStore.set(name, value, options)
+            )
+          } catch {
+           
+          }
         },
       },
-    },
-  );
+    }
+  )
 
-  return client;
+return client;
 }
 
 export async function getUser() {
-  const { auth } = await createClient();
-
-  const session = await auth.getSession();
-  
-  // If no session exists, return null immediately
-  if (!session.data.session) {
-    return null;
-  }
+  const {auth} = await createClient();
 
   const userObject = await auth.getUser();
 
@@ -42,6 +37,5 @@ export async function getUser() {
     console.error(userObject.error);
     return null;
   }
-
-  return userObject.data.user;
+return userObject.data.user;
 }
