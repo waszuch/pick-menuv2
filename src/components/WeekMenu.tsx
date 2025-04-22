@@ -5,6 +5,8 @@ import { pl } from "date-fns/locale";
 import { deleteMenuItem } from "@/actions/menu";
 import { useRouter } from "next/navigation";
 import AddMenuItemForm from "./AddMenuItemForm";
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
 
 type MenuItem = {
   id: string;
@@ -23,13 +25,17 @@ type Props = {
 export default function WeekMenu({ items, weekStart, user }: Props) {
   const router = useRouter();
   const days = Array.from({ length: 7 }).map((_, i) => addDays(weekStart, i));
+  const [loadingId, setLoadingId] = useState<string | null>(null);
 
   const handleDelete = async (id: string) => {
+    setLoadingId(id);
     try {
       await deleteMenuItem(id);
       router.refresh();
     } catch (error) {
       console.error("Failed to delete item:", error);
+    } finally {
+      setLoadingId(null);
     }
   };
 
@@ -66,8 +72,13 @@ export default function WeekMenu({ items, weekStart, user }: Props) {
                       <button
                         onClick={() => handleDelete(item.id)}
                         className="text-destructive hover:text-destructive/80 mt-3 text-sm font-medium transition-colors"
+                        disabled={loadingId === item.id}
                       >
-                        Usuń
+                        {loadingId === item.id ? (
+                          <Loader2 className="animate-spin" />
+                        ) : (
+                          "Usuń"
+                        )}
                       </button>
                     )}
                   </div>
